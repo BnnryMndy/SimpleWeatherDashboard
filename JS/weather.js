@@ -7,6 +7,17 @@ var maxTemperature;
 var windDirection;
 var windSpeed;
 
+var forecastTemperature = [];
+var forecastWindDirection = [];
+var forecastWindspeed = [];
+var forecastHumidity = [];
+var forecastPressure = [];
+var forecastDataTime = [];
+
+var temperatureChart;
+var windChart;
+var pressureChart
+
 //TODO: MAKE IT SAFE
 var openWeatherKey = "bcb47df11476685f4b85b3e1d2334b84";
 
@@ -76,11 +87,135 @@ function getWeather(city, APIKey) {
     });
 }
 
-$(document).ready(function() {
+// function getForecastTemperature(data) {
 
+// }
+
+function getWeatherForecast(city, APIKey) {
+    forecastTemperature = [];
+    forecastWindDirection = [];
+    forecastWindspeed = [];
+    forecastHumidity = [];
+    forecastPressure = [];
+    forecastDataTime = [];
+    $.getJSON("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=metric&apikey=" + APIKey, function(data) {
+        console.log(data.list);
+        $.each(data.list, function() {
+            forecastDataTime.push(this.dt_txt);
+            forecastTemperature.push(this.main.temp);
+            forecastWindDirection.push(this.wind.deg);
+            forecastWindspeed.push(this.wind.speed);
+            forecastPressure.push(this.main.pressure);
+            forecastHumidity.push(this.main.humidity);
+        });
+        temperatureChart = drawLineChart(document.getElementById('temperatureChart'), forecastDataTime, forecastTemperature);
+        windChart = drawRadarChart(document.getElementById('windChart'), forecastWindDirection, forecastWindspeed);
+        pressureChart = drawBarChart(document.getElementById('pressureChart'), forecastDataTime, forecastPressure);
+
+    });
+
+}
+
+function drawLineChart(canvas, labels, data) {
+    var ctx = canvas.getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Температура в градусах',
+                data: data,
+            }]
+        },
+        plugins: [{
+            id: 'custom_canvas_background_color',
+            beforeDraw: (chart) => {
+                const ctx = chart.canvas.getContext('2d');
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        }],
+        options: {
+            fill: 'start',
+        }
+    });
+
+    return myChart;
+}
+
+function drawRadarChart(canvas, labels, data) {
+    var ctx = canvas.getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'скорость ветра в м/с',
+                data: data,
+            }]
+        },
+        plugins: [{
+            id: 'custom_canvas_background_color',
+            beforeDraw: (chart) => {
+                const ctx = chart.canvas.getContext('2d');
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        }],
+        options: {
+            fill: 'start',
+        }
+    });
+
+    return myChart;
+}
+
+function drawBarChart(canvas, labels, data) {
+    var ctx = canvas.getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Давление в мм. рт. ст.',
+                data: data,
+            }]
+        },
+        plugins: [{
+            id: 'custom_canvas_background_color',
+            beforeDraw: (chart) => {
+                const ctx = chart.canvas.getContext('2d');
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        }],
+        options: {
+            fill: 'start',
+        }
+    });
+
+    return myChart;
+}
+
+$(document).ready(function() {
+    getWeatherForecast(cityName, openWeatherKey);
     getWeather(cityName, openWeatherKey);
+
     $("#cityButton").on("click", function() {
         cityName = $("#cityName").val();
         getWeather(cityName, openWeatherKey);
+        temperatureChart.destroy();
+        pressureChart.destroy();
+        windChart.destroy();
+        getWeatherForecast(cityName, openWeatherKey);
     });
 });

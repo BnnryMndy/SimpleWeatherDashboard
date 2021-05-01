@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="JS/weather.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
     <link rel="stylesheet" href="CSS/style.css">
     <title>weather dashboard</title>
 </head>
@@ -66,8 +67,14 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-6"><canvas id="temperatureChart" class="m-a" width="auto" height="150"></canvas></div>
+            <div class="col-sm-6"><canvas id="pressureChart" class="m-a" width="auto" height="150"></canvas></div>
+        </div>
 
+        <canvas id="windChart" class="m-a" width="auto" height="100"></canvas>
 
+        <canvas id="humidityChart" class="m-a" width="auto" height="100"></canvas>
     </div>
 
 

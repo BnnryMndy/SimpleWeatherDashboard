@@ -17,8 +17,6 @@ var forecastDataTime = [];
 var temperatureChart;
 var windChart;
 var pressureChart
-
-//TODO: MAKE IT SAFE
 var openWeatherKey = "bcb47df11476685f4b85b3e1d2334b84";
 
 function getWeatherStatus(data) {
@@ -33,8 +31,6 @@ function getWeatherStatus(data) {
 }
 
 function getMainWeatherInfo(data) {
-    // console.log("MAIN WEATHER INFO");
-
     $.each(data, function(key, val) {
         if (key == "temp") temperature = val;
         if (key == "feels_like") feelsTemperautre = val;
@@ -43,7 +39,6 @@ function getMainWeatherInfo(data) {
         if (key == "humidity") getHumidityInfo(val);
         if (key == "pressure") getPressureInfo(val);
     });
-    // console.log("___________________");
     $("#temperature-info").html('<img src="img/thermometer.png" alt="" srcset="" class="h-25 w-25">' + "<b>сейчас " + temperature + " ℃</b> ощущается как " + feelsTemperautre + " ℃");
 }
 
@@ -52,7 +47,6 @@ function getWindInfo(data) {
     $.each(data, function(key, val) {
         if (key == "speed") windSpeed = val;
         if (key == "deg") windDirection = val;
-        // console.log(key + " : " + val);
     });
     $("#wind-info").html('<img src="img/wind-sign.png" class="w-25 h-25" style="transform: rotate(' + (windDirection - 90) + 'deg);">' + "<b>Ветер " + windSpeed + " м/с </b>");
     console.log("___________________");
@@ -87,10 +81,6 @@ function getWeather(city, APIKey) {
     });
 }
 
-// function getForecastTemperature(data) {
-
-// }
-
 function getWeatherForecast(city, APIKey) {
     forecastTemperature = [];
     forecastWindDirection = [];
@@ -99,7 +89,6 @@ function getWeatherForecast(city, APIKey) {
     forecastPressure = [];
     forecastDataTime = [];
     $.getJSON("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=metric&apikey=" + APIKey, function(data) {
-        console.log(data.list);
         $.each(data.list, function() {
             forecastDataTime.push(this.dt_txt);
             forecastTemperature.push(this.main.temp);

@@ -5,13 +5,80 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="JS/weather.js"></script>
+    <link rel="stylesheet" href="CSS/style.css">
     <title>weather dashboard</title>
 </head>
 
 <body>
+    <div class="container m-auto">
+        <!--* header -->
+        <div class="header">
+            <!--* city input -->
+            <form class="form-inline flex-row-reverse">
+                <span class="form-group bmd-form-group ml-1">
+                    <input type="button" id="cityButton" class="btn btn-outline-primary" value="Узнать погоду">
+                </span>
+                <div class="form-group">
+                    <label for="cityName" class="bmd-label-floating">Ваш город:</label>
+                    <input type="text" class="form-control" id="cityName">
+                    <!-- <span class="bmd-help">Например, Калининград</span> -->
+                </div>
 
+            </form>
+        </div>
+
+        <h1 id="cityNameHeader">Погода в городе</h1>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <!--* main weather info -->
+                <div id="main-weather-info" class="card text-white bg-primary p-2">
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!--* temperature info -->
+                <div id="temperature-info" class="card text-white bg-success p-2">
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!--* wind info -->
+
+                <div id="wind-info" class="card text-white bg-primary p-2">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-4">
+                <div id="pressure-info" class="card text-white bg-primary p-2">
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div id="humidity-info" class="card text-white bg-primary p-2">
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!--  -->
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('body').bootstrapMaterialDesign();
+        });
+    </script>
 </body>
 
 </html>

@@ -189,6 +189,13 @@ function drawBarChart(canvas, labels, data) {
         }],
         options: {
             fill: 'start',
+            yAxes: [{
+                ticks: {
+                    min: 900,
+                    max: 1100,
+                    step: 1
+                },
+            }],
         }
     });
 
